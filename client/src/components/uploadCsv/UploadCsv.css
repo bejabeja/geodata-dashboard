@@ -1,0 +1,44 @@
+.upload-csv {
+    color: 'red';
+}
+
+.file-upload-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.custom-file-upload {
+    display: inline-flex;
+    align-items: center;
+    height: 2.5rem;
+    padding: 0 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid #d1d5db;
+    background-color: #2563eb;
+    color: #ffffff;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+    text-align: center;
+    user-select: none;
+}
+
+.custom-file-upload:hover {
+    background-color: #3b82f6;
+}
+
+.custom-file-upload input[type="file"] {
+    display: none;
+}
+
+.upload-status {
+    color: #2563eb;
+    font-size: 0.875rem;
+}
+
+.upload-error {
+    color: #ef4444;
+    font-size: 0.875rem;
+}
