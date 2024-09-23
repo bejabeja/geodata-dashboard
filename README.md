@@ -6,6 +6,7 @@ This project is an interactive dashboard that allows politicians and other stake
 2. [Features](#features)
 3. [Installation](#installation)
 4. [Usage](#usage)
+5. [License](#license)
 
 
 ## Description
@@ -82,3 +83,14 @@ Once the app is running, users can:
 5. Sidebar. Cards section that provides insights into trends and total cases.
 6. Sidebar. When data is non-numerical, a dropdown appears with different related information.
 
+
+# License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+### Summary of the MIT License
+- You are free to use, modify, and distribute this project.
+- You must include the original license in any copies or substantial portions of the software.
+- The software is provided "as is", without warranty of any kind.
+
+For more detailed information, please refer to the full text of the MIT License in the [LICENSE](LICENSE) file.
