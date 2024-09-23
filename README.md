@@ -47,21 +47,21 @@ To set up and run the project locally, follow these steps:
 
 2. First, install all necessary dependencies for both the client and server:
 
-```bash
-make install
-```
+   ```bash
+   make install
+   ```
 
 3. Now you can use the Makefile to easily start or stop both the client and server:
 
 - To start both the client and server, run:
-```bash
-make start
-```
+   ```bash
+   make start
+   ```
 
 - To stop both processes and free the ports, run:
-```bash
-make stop
-```
+   ```bash
+   make stop
+   ```
 
 4. Access the application:
 
