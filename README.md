@@ -40,30 +40,32 @@ To set up and run the project locally, follow these steps:
 
    ```bash
    git clone https://github.com/bejabeja/geodata-dashboard.git
+   cd geodata-dashboard
    ```
 
 
-2. Navigate to the project directory, install dependencies, and start both the client and server:
+2. First, install all necessary dependencies for both the client and server:
 
-Client side:
 ```bash
-cd client
-
-npm install
-
-npm start
+make install
 ```
 
-Server side:
+3. Now you can use the Makefile to easily start or stop both the client and server:
+
+- To start both the client and server, run:
 ```bash
-cd server
-
-npm install
-
-npm start
+make start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- To stop both processes and free the ports, run:
+```bash
+make stop
+```
+
+4. Access the application:
+
+Once both processes are running, you can access the application in your browser at [http://localhost:3000](http://localhost:3000)
+
 
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
@@ -76,7 +78,7 @@ Once the app is running, users can:
 1. View the map that displays geospatial data by year.
 2. Interact with the map. When zooming in or out, data is grouped for better visualization by region.
 3. Interact with map. Click on map markers to open a pop-up with specific data details.
-4. Sidebar. Slider filter option allows users to view data by year.
-5. Sidebar. Cards section that provides insights into trends ans total cases.
+4. Sidebar. Use the sidebar slider filter option to view data by year.
+5. Sidebar. Cards section that provides insights into trends and total cases.
 6. Sidebar. When data is non-numerical, a dropdown appears with different related information.
 
