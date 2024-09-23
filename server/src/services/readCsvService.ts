@@ -2,7 +2,6 @@ import Papa from 'papaparse';
 import path from 'path';
 import fs from 'fs';
 import { MarkerData } from '../types/MarkerData';
-
 export interface CsvRow {
     [key: string]: any;
 }
@@ -20,11 +19,27 @@ export function setNewCSVFileToCache(filePath: string): void {
     cachedData = null;
 }
 
+export const parseCSVFromBuffer = async (buffer: Buffer): Promise<void> => {
+    return new Promise((resolve, reject) => {
+        Papa.parse(buffer.toString('utf-8'), {
+            header: true,
+            skipEmptyLines: true,
+            complete: (results) => {
+                cachedData = (results.data as CsvRow[])
+                    .map(createMarkerData)
+                    .filter((marker): marker is MarkerData => marker !== null);
+                resolve();
+            },
+            error: (error: any) => reject(new Error('Error parsing the CSV file from buffer: ' + error.message)),
+        });
+    });
+};
+
 export async function getCachedCSVData(): Promise<MarkerData[]> {
     if (!cachedData) {
         const filePathToUse = currentFilePath || defaultCsvFilePath;
         cachedData = await parseCSVFile(filePathToUse);
-        console.log('Data cached successfully.');
+        console.log('Data loaded and cached successfully.');
     }
 
     return cachedData;
@@ -45,10 +60,10 @@ export const parseCSVFile = (filePath: string): Promise<MarkerData[]> => {
 
                     resolve(csvData);
                 },
-                error: (error) => reject(new Error('Error parsing CSV file: ' + error.message)),
+                error: (error) => reject(new Error('Error parsing the CSV file: ' + error.message)),
             });
         } catch (err) {
-            reject(new Error('Error reading CSV file'));
+            reject(new Error('Error reading the CSV file'));
         }
     });
 };

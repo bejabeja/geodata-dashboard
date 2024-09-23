@@ -1,29 +1,27 @@
 import { Request, Response } from 'express';
-import { setNewCSVFileToCache } from '../services/readCsvService';
-import { groupCsvDataByDate, groupCSVByTotalAmounts } from '../services/csvdataService'
-import fs from 'fs';
-
+import { setNewCSVFileToCache, parseCSVFromBuffer } from '../services/readCsvService';
+import { groupCsvDataByDate, groupCSVByTotalAmounts } from '../services/csvdataService';
+import path from 'path';
 
 export const uploadCsvData = async (req: Request, res: Response) => {
-    if (!req.file || !req.file.path) {
-        return res.status(400).json({ error: 'No file uploaded' });
-    }
-
-    const filePath = req.file.path;
     const currentYear = new Date().getFullYear().toString();
 
     try {
-        setNewCSVFileToCache(filePath);
+        if (!req.file || !req.file.buffer) {
+            console.log('No file uploaded, using the default CSV.');
+            const defaultFilePath = path.join(__dirname, '../data/data-birds.csv');
+            setNewCSVFileToCache(defaultFilePath);
+        } else {
+            console.log('CSV file uploaded and processed from buffer.');
+            await parseCSVFromBuffer(req.file.buffer);
+        }
+
         const dataYear = await groupCsvDataByDate(currentYear);
-        await groupCSVByTotalAmounts(currentYear)
+        await groupCSVByTotalAmounts(currentYear);
         res.json(dataYear);
     } catch (error) {
-        console.error('Error uploading or processing CSV data:', error);
-        res.status(500).send('Error uploading or processing CSV data');
-    } finally {
-        if (fs.existsSync(filePath)) {
-            fs.unlinkSync(filePath);
-        }
+        console.error('Error processing CSV data:', error);
+        res.status(500).send('Error processing CSV data');
     }
 };
 
