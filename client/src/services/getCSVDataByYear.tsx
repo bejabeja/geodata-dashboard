@@ -3,6 +3,16 @@ import { TotalAmountsData } from "../types/TotalAmountsData";
 
 
 export const getCSVDataByYear = async (year: string): Promise<MarkerData[]> => {
+    const yearNumber = Number(year);
+    if (!year || year.length !== 4 || isNaN(yearNumber)) {
+        throw new Error('Invalid year format. Please provide a four-digit year.');
+    }
+
+    const currentYear = new Date().getFullYear();
+    if (yearNumber > currentYear) {
+        throw new Error('Year cannot be in the future.');
+    }
+
     try {
         const response = await fetch(`${process.env.REACT_APP_ENDPOINT}/csvdata/${year}`, {
             method: 'GET',
@@ -18,7 +28,6 @@ export const getCSVDataByYear = async (year: string): Promise<MarkerData[]> => {
         const csvData: MarkerData[] = await response.json();
         return csvData;
     } catch (error) {
-        console.error('Error fetching CSV data by year:', error);
         throw error;
     }
 };
@@ -39,7 +48,6 @@ export const getCSVDataTotalAmountsByYear = async (year: string): Promise<TotalA
         const csvDataTotalAmounts: TotalAmountsData = await response.json();
         return csvDataTotalAmounts;
     } catch (error) {
-        console.error('Error fetching CSV data total amounts by year:', error);
         throw error;
     }
 };

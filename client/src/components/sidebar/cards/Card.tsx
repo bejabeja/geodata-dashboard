@@ -1,7 +1,12 @@
-import React from "react";
 import './Card.css'
 
-function Card({ title, value }) {
+
+interface CardProps {
+    title: string;
+    value: any;
+}
+
+function Card({ title, value }: CardProps) {
 
     return (
         <div className='card'>
