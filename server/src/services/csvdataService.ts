@@ -3,8 +3,15 @@ import { getCachedCSVData } from './readCsvService';
 
 export async function groupCsvDataByDate(year: string): Promise<MarkerData[]> {
   const data = await getCachedCSVData();
+
   const groupedData = data.reduce((acc, marker) => {
-    const yearFounded = marker.timestamp ? new Date(marker.timestamp).getFullYear().toString() : 'Unknown Year';
+    let yearFounded = 'Unknown Year';
+    if (marker.timestamp) {
+      const parsedDate = new Date(marker.timestamp);
+      if (!isNaN(parsedDate.getTime())) {
+        yearFounded = parsedDate.getFullYear().toString();
+      }
+    }
 
     if (!acc[yearFounded]) {
       acc[yearFounded] = [];
