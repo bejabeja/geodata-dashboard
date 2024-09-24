@@ -6,14 +6,12 @@ export const uploadCSV = async (formData: any) => {
         });
 
         if (!response.ok) {
-            throw new Error('Network response was not ok.');
+            throw new Error('Failed to upload CSV. Network response was not ok.');
         }
 
         const data = await response.json();
         return data;
-    } catch (err) {
-        console.error('Error uploading file:', err);
+    } catch (err: any) {
+        throw new Error(`Error uploading CSV: ${err.message || err}`);
     }
 }
-
-
