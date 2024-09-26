@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Card from './cards/Card';
 import './Sidebar.css';
 import { useCsvData } from '../../hooks/useCsvData';
@@ -8,7 +8,11 @@ function Sidebar() {
     const { totalAmounts } = useCsvData();
     const [selectedDropdownValues, setselectedDropdownValues] = useState<{ [key: string]: number }>({});
 
-    const sidebarValues = Object.keys(totalAmounts);
+    useEffect(() => {
+        setselectedDropdownValues({});
+    }, [totalAmounts]);
+
+    const sidebarValues = Object.keys(totalAmounts || {});
 
     const handleDropdownChange = (key: string, event: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedValue = event.target.value;
@@ -25,22 +29,24 @@ function Sidebar() {
                 <FilterSlider />
             </header>
 
-            <div className='sidebar-content'>
+            {sidebarValues.length === 0 ? <p>No data available.</p> :
+                <div className='sidebar-content'>
+                    <div className='cardGrid'>
+                        {sidebarValues.map((key: string, index: number) => {
+                            const value = totalAmounts[key];
+                            if (typeof value !== 'number') {
+                                return null
+                            }
+                            return <Card key={index} title={key} value={value} />;
+                        })}
+                    </div>
+                    <div className='maindropdown-container'>
+                        {sidebarValues.map((key: string) => {
+                            const value = totalAmounts[key];
 
-                <div className='cardGrid'>
-                    {sidebarValues.map((key: string, index: number) => {
-                        const value = totalAmounts[key];
-                        if (typeof value === 'number') {
-                            return <Card key={index} title={key} value={value}  />;
-                        }
-                        return null;
-                    })}
-                </div>
-                <div className='maindropdown-container'>
-                    {sidebarValues.map((key: string, index: number) => {
-                        const value = totalAmounts[key];
-
-                        if (typeof value === 'object') {
+                            if (typeof value !== 'object') {
+                                return null;
+                            }
                             const dropdownOptions = Object.keys(value);
 
                             return (
@@ -49,6 +55,7 @@ function Sidebar() {
                                     <select
                                         value={selectedDropdownValues[key] || ''}
                                         onChange={(e) => handleDropdownChange(key, e)}
+                                        aria-label={`Select option for ${key}`}
                                     >
                                         <option value="" disabled>
                                             Select an option
@@ -60,7 +67,7 @@ function Sidebar() {
                                         ))}
                                     </select>
 
-                                    {selectedDropdownValues[key] !== undefined && selectedDropdownValues[key] !== 0 && (
+                                    {selectedDropdownValues[key] && (
                                         <Card
                                             key={`${key}-${selectedDropdownValues[key]}`}
                                             title=''
@@ -69,11 +76,10 @@ function Sidebar() {
                                     )}
                                 </div>
                             );
-                        }
-                        return null;
-                    })}
+                        })}
+                    </div>
                 </div>
-            </div>
+            }
         </main>
     );
 }
