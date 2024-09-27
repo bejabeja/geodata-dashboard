@@ -1,0 +1,11 @@
+.single-selector {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-grow: 1;
+}
+
+.year-selector-dropdown {
+    padding: 0.5rem;
+    font-size: 1rem;
+}

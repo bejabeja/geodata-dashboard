@@ -2,21 +2,21 @@ import React, { useState, useEffect } from 'react';
 import Card from './cards/Card';
 import './Sidebar.css';
 import { useCsvData } from '../../hooks/useCsvData';
-import FilterSlider from '../filters/FilterSlider';
+import FilterSlider from '../filters/FilterYear';
 
 function Sidebar() {
     const { totalAmounts } = useCsvData();
-    const [selectedDropdownValues, setselectedDropdownValues] = useState<{ [key: string]: number }>({});
+    const [selectedDropdownValues, setSelectedDropdownValues] = useState<{ [key: string]: number }>({});
 
     useEffect(() => {
-        setselectedDropdownValues({});
+        setSelectedDropdownValues({});
     }, [totalAmounts]);
 
     const sidebarValues = Object.keys(totalAmounts || {});
 
     const handleDropdownChange = (key: string, event: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedValue = event.target.value;
-        setselectedDropdownValues((prevState) => ({
+        setSelectedDropdownValues((prevState) => ({
             ...prevState,
             [key]: Number(selectedValue),
         }));

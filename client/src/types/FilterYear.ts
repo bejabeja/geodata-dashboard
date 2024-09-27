@@ -1,4 +1,4 @@
-export interface FilterSliderProps {
+export interface FilterYearProps {
     min?: number;
     max?: number;
     step?: number;
