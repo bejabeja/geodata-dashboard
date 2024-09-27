@@ -31,9 +31,9 @@ describe('uploadCSV', () => {
         fetchMock.mockResponseOnce('', { status: 500 });
 
         const formData = new FormData();
-        formData.append('file', new Blob(['test content']), 'test.csv');
+        formData.append('file', new File(['test content'], 'test.csv', { type: 'text/csv' }));
 
-        await expect(uploadCSV(formData)).rejects.toThrow('Failed to upload CSV. Network response was not ok.');
+        await expect(uploadCSV(formData)).rejects.toThrow('Failed to upload file. Please try again.');
 
         expect(fetch).toHaveBeenCalledWith(
             `${process.env.REACT_APP_ENDPOINT}/csvdata/upload-csv`,
@@ -48,9 +48,10 @@ describe('uploadCSV', () => {
         fetchMock.mockRejectOnce(new Error('fetch failed'));
 
         const formData = new FormData();
-        formData.append('file', new Blob(['test content']), 'test.csv');
+        formData.append('file', new File(['test content'], 'test.csv', { type: 'text/csv' }));
 
-        await expect(uploadCSV(formData)).rejects.toThrow('Error uploading CSV: fetch failed');
+
+        await expect(uploadCSV(formData)).rejects.toThrow('Failed to upload file. Please try again.');
 
 
     });

@@ -12,6 +12,6 @@ export const uploadCSV = async (formData: any) => {
         const data = await response.json();
         return data;
     } catch (err: any) {
-        throw new Error(`Error uploading CSV: ${err.message || err}`);
+        throw new Error(`Failed to upload file. Please try again.`);
     }
 }

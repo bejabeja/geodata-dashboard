@@ -6,27 +6,26 @@ import { getCSVDataTotalAmountsByYear } from '../../services/getCSVDataByYear';
 import './UploadCsv.css';
 
 export default function UploadCsv() {
-    const { setCsvData, setTotalAmounts } = useCsvData()
+    const { setCsvData, setTotalAmounts, setErrors, errors } = useCsvData()
     const { setFilters } = useFilters();
     const [uploading, setUploading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
     const [fileName, setFileName] = useState<string>('No file chosen');
 
     const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (!file) {
-            setError('No file selected. Please choose a CSV file.');
+            setErrors({ message: 'No file selected. Please choose a CSV file.' });
             return;
         }
 
         if (!file.name.endsWith('.csv')) {
-            setError('Invalid file format. Only CSV files are allowed.');
+            setErrors({ message: 'Invalid file format. Only CSV files are allowed.' });
             return;
         }
 
         setFileName(file.name);
         setUploading(true);
-        setError(null);
+        setErrors(null);
 
         const formData = new FormData();
         formData.append('file', file);
@@ -38,8 +37,8 @@ export default function UploadCsv() {
             setCsvData(response)
             setTotalAmounts(totalAmountsData)
             setFilters({ year: currentYear });
-        } catch (err) {
-            setError('Failed to upload file. Please try again.');
+        } catch (err: any) {
+            setErrors({ message: err.message });
         } finally {
             setUploading(false);
         }
@@ -63,9 +62,9 @@ export default function UploadCsv() {
                 <p id="file-upload-status" role="status" className="upload-status">
                     Uploading...
                 </p>
-            ) : error ? (
+            ) : errors ? (
                 <p id="file-upload-status" role="alert" className="upload-error">
-                    {error}
+                    {errors.message}
                 </p>
             ) : null}
         </div>
