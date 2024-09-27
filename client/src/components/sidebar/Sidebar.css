@@ -1,54 +1,6 @@
 .sidebar-header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    gap: .5rem;
-}
-
-.sidebar-content {
-    display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-}
-
-.cardGrid {
-    display: grid;
-    gap: 1.5rem;
-    grid-template-columns: repeat(1, 1fr);
-}
-
-.maindropdown-container {
-    display: grid;
-    gap: 1.5rem;
-    grid-template-columns: repeat(1, 1fr);
-
-}
-
-.dropdown-container {
-    margin-bottom: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-select {
-    padding: 10px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    font-size: 16px;
-}
-
-.dropdown-label {
-    text-transform: uppercase;
-}
-
-@media (min-width: 640px) {
-    .cardGrid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .maindropdown-container {
-        grid-template-columns: repeat(2, 1fr);
-    }
+    gap: 1rem;
+    padding: 1rem;
 }

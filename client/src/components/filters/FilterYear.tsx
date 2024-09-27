@@ -23,7 +23,7 @@ export default function FilterSlider({
     }
 
     return (
-        <div className="single-selector">
+        <div className="filter-selector">
             <select
                 id="year-selector"
                 value={Number(filters.year) || min}
