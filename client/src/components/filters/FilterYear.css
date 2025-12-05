@@ -6,6 +6,15 @@
 }
 
 .year-selector-dropdown {
-    padding: 0.5rem;
+    padding: 0.6rem 0.75rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
     font-size: 1rem;
+    transition: 0.2s ease;
+}
+
+.year-selector-dropdown:hover {
+    border-color: var(--primary);
 }

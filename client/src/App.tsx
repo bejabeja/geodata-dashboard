@@ -1,32 +1,32 @@
-import React from 'react';
-import './App.css';
-import MapSearch from './components/map/MapSearch'
-import Sidebar from './components/sidebar/Sidebar';
-import { useFilters } from './hooks/userFilters';
-import UploadCsv from './components/uploadCsv/UploadCsv';
-import Options from './components/options/Options';
+import "./App.css";
+import FilterYear from "./components/filters/FilterYear";
+import MapSearch from "./components/map/MapSearch";
+import Options from "./components/options/Options";
+import { useFilters } from "./hooks/userFilters";
 
 function App() {
   const { filters } = useFilters();
 
   return (
     <main className="app">
-      <header className='app-header'>
-        <h1 className='app-title'>Dashboard {filters.year}</h1>
-        <UploadCsv />
+      <header className="app-header">
+        <h1 className="app-title">Swiss Bird Flu</h1>
+        <h2 className="app-subtitle">Geodata Dashboard {filters.year}</h2>
       </header>
-      <section className='app-content'>
-        <div className='app-top-content'>
-          <div className='mapSearch'>
-            <MapSearch></MapSearch>
-          </div>
-          <div className='sideBar-content'>
-            <Sidebar></Sidebar>
-          </div>
+
+      <section className="filters-bar">
+        <div className="filter-item">
+          <label>Year</label>
+          <FilterYear />
         </div>
-        <div>
-          <Options></Options>
+      </section>
+
+      <section className="app-content">
+        <div className="map-container">
+          <MapSearch />
         </div>
+
+        <Options />
       </section>
     </main>
   );
